@@ -48,7 +48,7 @@ public class trap : MonoBehaviour
     {
         if (rigidbody.transform.rotation.eulerAngles.z > 260  ||  rigidbody.transform.rotation.eulerAngles.z < 89.9)
         {
-            rigidbody.MoveRotation(rigidbody.rotation *  Quaternion.Euler(transform forward * speed));
+            rigidbody.MoveRotation(rigidbody.rotation *  Quaternion.Euler(transform.forward * speed));
         }
 
     }
