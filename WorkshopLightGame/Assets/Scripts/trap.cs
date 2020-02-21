@@ -13,6 +13,10 @@ public class trap : MonoBehaviour
     private bool activated;
 
     UnityEvent eventTrap;
+
+    AudioSource sound;
+
+
     
     void Start()
     {
@@ -20,11 +24,15 @@ public class trap : MonoBehaviour
      
         rigidbody = GetComponent<Rigidbody>();
 
+        sound = GetComponent<AudioSource>();
+
         if (eventTrap == null)
         {
             eventTrap = new UnityEvent();
         }
         eventTrap.AddListener(activate);
+
+
     }
 
     // Update is called once per frame
@@ -40,17 +48,25 @@ public class trap : MonoBehaviour
     private void FixedUpdate() {
         if(activated)
         {
-            clap();
+            if(clap())
+            {
+                activated = false;
+                
+                Debug.Log("AAA");
+
+                sound.Play();
+            }
         }
     }
 
-    private void clap()
+    private bool clap()
     {
         if (rigidbody.transform.rotation.eulerAngles.z > 260  ||  rigidbody.transform.rotation.eulerAngles.z < 89.9)
         {
             rigidbody.MoveRotation(rigidbody.rotation *  Quaternion.Euler(transform.forward * speed));
+            return false;
         }
-
+        return true;
     }
 
     private void activate()
